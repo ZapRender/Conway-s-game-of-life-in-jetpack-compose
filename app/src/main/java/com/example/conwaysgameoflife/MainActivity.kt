@@ -11,16 +11,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -107,19 +109,31 @@ fun GameBoardView(generation: Generation, cellSize: Dp) {
             }
         }
 
-        Button(modifier = Modifier
-            .fillMaxSize()
+        Row(modifier = Modifier.fillMaxSize()
             .constrainAs(button) {
                 top.linkTo(grid.bottom)
                 bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
                 end.linkTo(parent.end)
-            }, onClick = {
-            generation.toggleGame()
-
+                start.linkTo(parent.start)
             }) {
-            Text(text ="Next Generation")
+            Button(
+                modifier = Modifier.wrapContentSize(),
+                onClick = { generation.toggleGame() }
+            ) {
+                if (generation.isRunning) {
+                    Icon(painter = painterResource(id = R.drawable.ic_pause_circle), "Play Button")
+                } else {
+                    Icon(painter = painterResource(id = R.drawable.ic_play_circle), "Play Button")
+                }
+            }
 
+            Button(
+                modifier = Modifier.wrapContentSize(),
+                onClick = { generation.cleanMatrix() }
+            ) {
+                Icon(painter = painterResource(id = R.drawable.ic_restart), "Play Button")
+            }
         }
+
     }
 }

@@ -16,7 +16,7 @@ class Generation:ViewModel() {
     private var n by mutableIntStateOf(0)
 
     private var gameJob: Job? = null
-    private var isRunning by mutableStateOf(false)
+    var isRunning by mutableStateOf(false)
 
     var matrix by mutableStateOf(List(0) { List(0) { Cell() } })
 
@@ -33,7 +33,7 @@ class Generation:ViewModel() {
     fun getCellValue(i: Int, j: Int): Boolean{
         return matrix[i][j].isAlive
     }
-    fun evaluateGen(){
+    private fun evaluateGen(){
         val newGen = List(m) { List(n) { Cell() } }
         for(column in matrix.indices){
             for(row in matrix[column].indices){
@@ -92,6 +92,10 @@ class Generation:ViewModel() {
         } else {
             stopGame()
         }
+    }
+
+    fun cleanMatrix(){
+        matrix = List(m) { List(n) { Cell() } }
     }
 
 }

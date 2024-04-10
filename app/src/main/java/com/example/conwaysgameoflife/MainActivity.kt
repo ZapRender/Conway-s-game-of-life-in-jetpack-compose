@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
@@ -17,6 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -60,8 +62,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun GameBoardView(generation: Generation, cellSize: Dp) {
-
+fun GameBoard(generation: Generation, cellSize: Dp){
     ConstraintLayout(modifier = Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())) {
@@ -109,7 +110,8 @@ fun GameBoardView(generation: Generation, cellSize: Dp) {
             }
         }
 
-        Row(modifier = Modifier.fillMaxSize()
+        Row(modifier = Modifier
+            .fillMaxSize()
             .constrainAs(button) {
                 top.linkTo(grid.bottom)
                 bottom.linkTo(parent.bottom)
@@ -129,11 +131,26 @@ fun GameBoardView(generation: Generation, cellSize: Dp) {
 
             Button(
                 modifier = Modifier.wrapContentSize(),
-                onClick = { generation.cleanMatrix() }
+                onClick = {
+                    if(generation.isRunning){
+                        generation.toggleGame()
+                    }
+                    generation.cleanMatrix()
+
+                }
             ) {
                 Icon(painter = painterResource(id = R.drawable.ic_restart), "Play Button")
             }
         }
 
+    }
+}
+
+@Composable
+fun GameBoardView(generation: Generation, cellSize: Dp) {
+    Scaffold { innerPadding ->
+        ConstraintLayout(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+            GameBoard(generation, cellSize)
+        }
     }
 }

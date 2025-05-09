@@ -16,10 +16,14 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -146,9 +150,18 @@ fun GameBoard(generation: Generation, cellSize: Dp){
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameBoardView(generation: Generation, cellSize: Dp) {
-    Scaffold { innerPadding ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("conway's game of life") },
+                colors = TopAppBarDefaults.smallTopAppBarColors()
+            )
+        },
+
+    ) { innerPadding ->
         ConstraintLayout(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
             GameBoard(generation, cellSize)
         }

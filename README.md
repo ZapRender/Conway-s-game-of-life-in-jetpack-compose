@@ -2,6 +2,8 @@
 
 Este proyecto es una implementación del famoso **Juego de la Vida** de Conway, desarrollado en **Kotlin** usando **Jetpack Compose** para la interfaz gráfica.
 
+<img src="screenshot.gif" width="600">
+
 ## Descripción
 El **Juego de la Vida** es un autómata celular donde cada célula en una cuadrícula vive o muere según reglas simples:
 - Una célula viva con 2 o 3 vecinos sobrevive.
